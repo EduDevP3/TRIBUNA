@@ -1,8 +1,9 @@
 {
   "private": true,
+  "packageManager": "pnpm@10.28.0",
   "engines": {
-    "node": ">=16",
-    "pnpm": ">=7"
+    "node": ">=18",
+    "pnpm": ">=8"
   },
   "scripts": {
     "dev": "next dev",
@@ -22,6 +23,7 @@
     "*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.14",
     "clsx": "^1.2.1",
     "framer-motion": "^10.12.8",
     "is-empty-iterable": "^3.0.0",
