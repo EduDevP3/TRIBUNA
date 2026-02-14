@@ -45,10 +45,20 @@ export async function ThreeItemGrid() {
   const thirdProduct = products[2]!;
 
   return (
-    <section className="lg:grid lg:grid-cols-6 lg:grid-rows-2" data-testid="homepage-products">
-      <ThreeItemGridItem size="full" item={firstProduct} background={firstProduct.bgColor || 'white'} />
-      <ThreeItemGridItem size="half" item={secondProduct} background={secondProduct.bgColor || 'white'} />
-      <ThreeItemGridItem size="half" item={thirdProduct} background={thirdProduct.bgColor || 'white'} />
+    <section className="mx-auto max-w-7xl px-4 py-12" data-testid="homepage-products">
+      <div className="mb-10 text-center md:text-left">
+        <h2 className="text-3xl font-black uppercase tracking-tighter text-black dark:text-white md:text-5xl">
+          DESTACADOS DE LA SEMANA
+        </h2>
+        <p className="mt-2 text-neutral-500 dark:text-neutral-400">
+          Selección premium de nuestros jerseys más vendidos
+        </p>
+      </div>
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-6 lg:grid-rows-2">
+        <ThreeItemGridItem size="full" item={firstProduct} background={firstProduct.bgColor || 'white'} />
+        <ThreeItemGridItem size="half" item={secondProduct} background={secondProduct.bgColor || 'white'} />
+        <ThreeItemGridItem size="half" item={thirdProduct} background={thirdProduct.bgColor || 'white'} />
+      </div>
     </section>
   );
 }

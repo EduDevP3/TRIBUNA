@@ -65,7 +65,12 @@ export const useCartStore = create<CartState>()(
             },
             clearCart: () => set({ items: [] }),
             totalItems: () => get().items.reduce((total, item) => total + item.quantity, 0),
-            totalPrice: () => get().items.reduce((total, item) => total + item.price * item.quantity, 0),
+            totalPrice: () => {
+                const totalQuantity = get().items.reduce((total, item) => total + item.quantity, 0);
+                const pairs = Math.floor(totalQuantity / 2);
+                const singles = totalQuantity % 2;
+                return (pairs * 1000) + (singles * 600);
+            },
         }),
         {
             name: 'cart-storage',

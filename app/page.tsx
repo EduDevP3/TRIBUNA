@@ -17,15 +17,15 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
+      <Suspense>
+        {/* @ts-expect-error Server Component */}
+        <Carousel />
+      </Suspense>
       {/* @ts-expect-error Server Component */}
       <ThreeItemGrid />
       <Suspense>
         {/* @ts-expect-error Server Component */}
-        <Carousel />
-        <Suspense>
-          {/* @ts-expect-error Server Component */}
-          <Footer />
-        </Suspense>
+        <Footer />
       </Suspense>
     </>
   );
