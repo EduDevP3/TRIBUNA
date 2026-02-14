@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import LoadingDots from 'components/loading-dots';
-import { Product } from 'lib/products';
+import { Product } from 'lib/types';
 import { useCartStore } from 'stores/cartStore';
 
 import { PRODUCT_SIZES } from 'lib/constants';

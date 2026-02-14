@@ -1,26 +1,7 @@
 import productsData from '../data/products.json';
+import { Product } from './types';
 
-export type Product = {
-  _id: string; // Keeping for internal referencing
-  sku: string;
-  title: string;
-  handle: string;
-  description: string;
-  price: number;
-  currency: string;
-  image_url: string;
-  stock: boolean;
-  category: string;
-  bgColor?: string;
-  createdAt: string;
-  updatedAt: string;
-
-  // Mapped/computed properties for frontend compatibility if needed
-  images: string[];
-  name: string; // Alias for title
-  slug: string; // Alias for handle
-  isActive: boolean; // Alias for stock
-};
+export type { Product };
 
 
 const mapToProduct = (p: any): Product => {
