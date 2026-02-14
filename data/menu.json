@@ -1,0 +1,14 @@
+[
+    {
+        "title": "Todo",
+        "path": "/search"
+    },
+    {
+        "title": "Selecciones",
+        "path": "/search/Selecciones"
+    },
+    {
+        "title": "Clubes",
+        "path": "/search/Clubes"
+    }
+]
