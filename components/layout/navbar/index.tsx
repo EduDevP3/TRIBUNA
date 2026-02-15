@@ -8,6 +8,7 @@ import { getMenu } from 'lib/products';
 import Image from 'next/image';
 import MobileMenu from './mobile-menu';
 import Search from './search';
+import UserMenu from './user-menu';
 
 const { SITE_NAME } = process.env;
 
@@ -50,7 +51,8 @@ export default async function Navbar() {
         <Search />
       </div>
 
-      <div className="flex w-1/3 justify-end">
+      <div className="flex w-1/3 justify-end items-center gap-4">
+        <UserMenu />
         <Suspense fallback={<CartIcon className="h-6" />}>
           <Cart />
         </Suspense>

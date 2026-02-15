@@ -31,13 +31,17 @@ const inter = Inter({
   variable: '--font-inter'
 });
 
+import PromoBanner from 'components/layout/promo-banner';
+import { Toaster } from 'react-hot-toast';
+import WhatsAppFloating from 'components/whatsapp-floating';
+
 export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={inter.variable}>
       <body className="bg-white text-black selection:bg-teal-300 dark:bg-black dark:text-white dark:selection:bg-fuchsia-600 dark:selection:text-white">
-        <div className="bg-teal-500 py-2 text-center text-sm font-bold uppercase tracking-widest text-white">
-          🔥 Promoción: Todos los jerseys en $600 | 2 por solo $1000 🔥
-        </div>
+        <Toaster position="top-center" />
+        <PromoBanner />
+        <WhatsAppFloating />
         <Awakener />
         {/* @ts-expect-error Server Component */}
         <Navbar />

@@ -1,7 +1,9 @@
 import Footer from 'components/layout/footer';
+import { getMenu } from 'lib/products';
 import { Suspense } from 'react';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({ children }: { children: React.ReactNode }) {
+  const footerMenu = await getMenu('next-js-frontend-footer-menu');
   return (
     <Suspense>
       <div className="w-full bg-white dark:bg-black">
@@ -9,8 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <Suspense>{children}</Suspense>
         </div>
       </div>
-      {/* @ts-expect-error Server Component */}
-      <Footer />
+      <Footer menu={footerMenu} />
     </Suspense>
   );
 }

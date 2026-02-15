@@ -25,17 +25,22 @@ export async function Carousel() {
             <Link
               key={`${product.slug}${i}`}
               href={`/product/${product.slug}`}
-              className="relative h-[30vh] w-1/2 flex-none md:w-1/3"
+              className="relative h-[30vh] w-1/2 flex-none md:w-1/3 p-2"
             >
-              {product.images[0] ? (
-                <Image
-                  alt={product.name}
-                  className="h-full object-contain"
-                  fill
-                  sizes="33vw"
-                  src={product.images[0]}
-                />
-              ) : null}
+              <div 
+                className="relative h-full w-full overflow-hidden rounded-xl flex items-center justify-center transition-transform hover:scale-[1.02]"
+                style={{ backgroundColor: product.bgColor || '#F5F5F5' }}
+              >
+                {product.images[0] ? (
+                  <Image
+                    alt={product.name}
+                    className="h-full w-full object-contain p-4"
+                    fill
+                    sizes="33vw"
+                    src={product.images[0]}
+                  />
+                ) : null}
+              </div>
             </Link>
           ))}
         </div>

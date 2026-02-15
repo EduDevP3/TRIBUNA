@@ -13,7 +13,11 @@ export const metadata = {
   }
 };
 
+import { getMenu } from 'lib/products';
+
 export default async function HomePage() {
+  const footerMenu = await getMenu('next-js-frontend-footer-menu');
+
   return (
     <>
       <Hero />
@@ -24,8 +28,7 @@ export default async function HomePage() {
       {/* @ts-expect-error Server Component */}
       <ThreeItemGrid />
       <Suspense>
-        {/* @ts-expect-error Server Component */}
-        <Footer />
+        <Footer menu={footerMenu} />
       </Suspense>
     </>
   );

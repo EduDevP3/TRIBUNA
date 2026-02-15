@@ -49,21 +49,23 @@ export function GridTileImage({
         />
       ) : null}
       {labels ? (
-        <div className="absolute left-0 top-0 w-3/4 text-black dark:text-white">
+        <div className="absolute left-0 top-0 w-full md:w-3/4 text-black dark:text-white">
           <h3
             data-testid="product-name"
             className={clsx(
-              'inline bg-white box-decoration-clone py-3 pl-5 font-semibold leading-loose shadow-[1.25rem_0_0] shadow-white dark:bg-black dark:shadow-black',
-              !labels.isSmall ? 'text-3xl' : 'text-lg'
+              'inline bg-white box-decoration-clone py-1.5 pl-3 pr-2 md:py-3 md:pl-5 font-bold leading-tight md:leading-loose shadow-[0.5rem_0_0] md:shadow-[1.25rem_0_0] shadow-white dark:bg-black dark:shadow-black',
+              !labels.isSmall ? 'text-xl md:text-3xl' : 'text-sm md:text-lg'
             )}
           >
             {labels.title}
           </h3>
-          <Price
-            className="w-fit bg-white px-5 py-3 text-sm font-semibold dark:bg-black dark:text-white"
-            amount={labels.amount}
-            currencyCode={labels.currencyCode}
-          />
+          <div className="mt-1">
+            <Price
+              className="w-fit bg-white px-3 py-1 md:px-5 md:py-3 text-xs md:text-sm font-bold dark:bg-black dark:text-white"
+              amount={labels.amount}
+              currencyCode={labels.currencyCode}
+            />
+          </div>
         </div>
       ) : null}
     </div>

@@ -10,7 +10,7 @@ export function Hero() {
         initial={{ opacity: 0, y: 20, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative h-40 w-80 md:h-56 md:w-[28rem]"
+        className="relative h-80 w-80 md:h-56 md:w-[28rem]"
       >
         <Image
           src="/logo.png"

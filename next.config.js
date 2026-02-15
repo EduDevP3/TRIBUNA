@@ -4,6 +4,7 @@ module.exports = {
     ignoreDuringBuilds: true
   },
   images: {
+    domains: ["tribuna-teal.vercel.app"],
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {

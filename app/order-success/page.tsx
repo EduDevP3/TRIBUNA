@@ -18,7 +18,7 @@ export default function OrderSuccessPage() {
           Volver a la tienda
         </Link>
         <a 
-          href="https://wa.me/521XXXXXXXXXX" 
+          href="https://wa.me/523221045519" 
           target="_blank" 
           rel="noopener noreferrer"
           className="rounded-full bg-green-500 px-6 py-3 font-medium text-white transition-opacity hover:opacity-80"
