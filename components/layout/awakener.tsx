@@ -16,7 +16,8 @@ export default function Awakener() {
     const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 minutes (120000 ms)
 
     fetch(`${apiUrl}/ping`, { signal: controller.signal })
-      .then(() => {
+      .then((res) => {
+        if (!res.ok) throw new Error('Ping failed');
         clearTimeout(timeoutId);
         console.log('Render ya cargado');
         // Set cookie to indicate backend is ready (expires in 1 hour)
