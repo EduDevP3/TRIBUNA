@@ -41,7 +41,7 @@ export default function CartModal({
     state: ''
   });
 
-  const { isLoggedIn, token } = useClientAuthStore();
+    const { isLoggedIn, token, logout } = useClientAuthStore();
 
   useEffect(() => {
     if (!isOpen) {
@@ -49,86 +49,92 @@ export default function CartModal({
     }
   }, [isOpen]);
 
-  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAddress({ ...address, [e.target.name]: e.target.value });
-  };
+    const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAddress({ ...address, [e.target.name]: e.target.value });
+    };
 
-  async function handleCheckout() {
-    if (!isLoggedIn()) {
-      toast.error('Por favor, inicia sesión para finalizar tu pedido.');
-      onClose();
-      router.push('/login');
-      return;
-    }
-
-    if (view === 'cart') {
-      setView('shipping');
-      return;
-    }
-
-    // Validar dirección simple
-    if (!address.street || !address.city || !address.postalCode) {
-      toast.error('Por favor, completa los datos de envío faltantes.');
-      return;
-    }
-
-    setIsCheckingOut(true);
-
-    try {
-        const orderPayload = {
-            orderItems: cartItems.map(item => ({
-                product: item.productId,
-                sku: item.name,
-                title: item.name,
-                quantity: item.quantity,
-                image_url: item.image || '',
-                price: item.price,
-                size: item.size
-            })),
-            shippingAddress: {
-                address: address.street,
-                city: address.city,
-                postalCode: address.postalCode,
-                country: address.country,
-                state: address.state
-            },
-            itemsPrice: totalPrice,
-            taxPrice: 0,
-            shippingPrice: 0,
-            totalPrice: totalPrice,
-        };
-
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:82/api/v1';
-        
-        const response = await fetch(`${apiUrl}/orders`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            credentials: 'include',
-            body: JSON.stringify(orderPayload)
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            clearCart();
+    async function handleCheckout() {
+        if (!isLoggedIn()) {
+            toast.error('Por favor, inicia sesión para completar tu compra.');
             onClose();
-            setView('cart'); // Reset for next time
-            router.push(`/order-summary/${data._id}`); 
-        } else {
-            const errorData = await response.json();
-            console.error('Order creation failed:', errorData);
-            toast.error(`Error al crear el pedido: ${errorData.message || 'Inténtalo de nuevo'}`);
+            router.push('/login');
+            return;
         }
 
-    } catch (error) {
-      console.error('Checkout error:', error);
-      toast.error('Error de conexión al crear el pedido.');
-    } finally {
-      setIsCheckingOut(false);
+        if (view === 'cart') {
+            setView('shipping');
+            return;
+        }
+
+        // Validar dirección simple
+        if (!address.street || !address.city || !address.postalCode) {
+            toast.error('Por favor, completa los datos de envío faltantes.');
+            return;
+        }
+
+        setIsCheckingOut(true);
+
+        try {
+            const orderPayload = {
+                orderItems: cartItems.map(item => ({
+                    product: item.productId,
+                    sku: item.name,
+                    title: item.name,
+                    quantity: item.quantity,
+                    image_url: item.image || '',
+                    price: item.price,
+                    size: item.size
+                })),
+                shippingAddress: {
+                    address: address.street,
+                    city: address.city,
+                    postalCode: address.postalCode,
+                    country: address.country,
+                    state: address.state
+                },
+                itemsPrice: totalPrice,
+                taxPrice: 0,
+                shippingPrice: 0,
+                totalPrice: totalPrice,
+            };
+
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:82/api/v1';
+
+            const response = await fetch(`${apiUrl}/orders`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                credentials: 'include',
+                body: JSON.stringify(orderPayload)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                clearCart();
+                onClose();
+                setView('cart'); // Reset for next time
+                router.push(`/order-summary/${data._id}`);
+            } else if (response.status === 401 || response.status === 403) {
+                console.error('Session expired or unauthorized');
+                logout();
+                onClose();
+                toast.error('Tu sesión ha expirado. Por favor, inicia sesión de nuevo.');
+                router.push('/login');
+            } else {
+                const errorData = await response.json();
+                console.error('Order creation failed:', errorData);
+                toast.error(`Error: ${errorData.message || 'Inténtalo de nuevo'}`);
+            }
+
+        } catch (error) {
+            console.error('Checkout error:', error);
+            toast.error('Error de conexión al crear el pedido.');
+        } finally {
+            setIsCheckingOut(false);
+        }
     }
-  }
 
   return (
     <Transition show={isOpen} as={Fragment}>
@@ -396,7 +402,10 @@ export default function CartModal({
                     className="block w-full rounded-full bg-black dark:bg-white dark:text-black p-4 text-center text-sm font-bold uppercase tracking-widest text-white opacity-90 hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-60 transition-all active:scale-[0.98]"
                   >
                     {isCheckingOut ? (
-                      <LoadingDots className="bg-white dark:bg-black" />
+                      <div className="flex items-center justify-center gap-3">
+                        <LoadingDots className="bg-white dark:bg-black" />
+                        <span>Procesando...</span>
+                      </div>
                     ) : (
                       view === 'cart' ? 'Continuar con el Envío' : 'Finalizar Pedido'
                     )}
